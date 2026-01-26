@@ -1,2 +1,2 @@
-# fhemm-app
+# fhe-app
 Forex Home Expert Intelligence - Algo Trading Community
