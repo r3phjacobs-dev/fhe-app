@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { ChatMessage } from '../types';
-import { chatWithGemini } from '../services/gemini';
+import { ChatMessage } from '../types.ts';
+import { chatWithGemini } from '../services/gemini.ts';
 
 const AIChat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -49,7 +49,6 @@ const AIChat: React.FC = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-140px)] bg-gray-50 dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
-      {/* Header */}
       <div className="bg-white dark:bg-gray-800 px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex items-center space-x-3">
         <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">N</div>
         <div>
@@ -60,7 +59,6 @@ const AIChat: React.FC = () => {
         </div>
       </div>
 
-      {/* Messages */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -87,7 +85,6 @@ const AIChat: React.FC = () => {
         )}
       </div>
 
-      {/* Input */}
       <div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
         <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-900 rounded-2xl px-4 py-2 border border-gray-200 dark:border-gray-800 focus-within:border-blue-400 transition-colors">
           <input
