@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import { Tab } from './types.ts';
-import Layout from './components/Layout.tsx';
-import Home from './components/Home.tsx';
-import AIChat from './components/AIChat.tsx';
-import Tasks from './components/Tasks.tsx';
-import Settings from './components/Settings.tsx';
-import { safeStorage } from './services/storage.ts';
+import { Tab } from './types';
+import Layout from './components/Layout';
+import Home from './components/Home';
+import AIChat from './components/AIChat';
+import Tasks from './components/Tasks';
+import Settings from './components/Settings';
+import { safeStorage } from './services/storage';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('home');
@@ -29,16 +29,20 @@ const App: React.FC = () => {
     });
 
     if (typeof window.show_10524338 === 'function') {
-      window.show_10524338({
-        type: 'inApp',
-        inAppSettings: {
-          frequency: 2,
-          capping: 0.1,
-          interval: 30,
-          timeout: 5,
-          everyPage: false
-        }
-      });
+      try {
+        window.show_10524338({
+          type: 'inApp',
+          inAppSettings: {
+            frequency: 2,
+            capping: 0.1,
+            interval: 30,
+            timeout: 5,
+            everyPage: false
+          }
+        });
+      } catch (e) {
+        console.warn("Monetag gagal dimuat");
+      }
     }
   }, []);
 
