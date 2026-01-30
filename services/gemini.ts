@@ -2,15 +2,8 @@
 import { GoogleGenAI } from "@google/genai";
 
 export const chatWithGemini = async (prompt: string, history: { role: 'user' | 'model', parts: { text: string }[] }[]) => {
-  // Pastikan API KEY tersedia sebelum inisialisasi
-  const apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) ? process.env.API_KEY : '';
-  
-  if (!apiKey) {
-    console.error("API Key Gemini tidak ditemukan.");
-    return "Maaf, asisten AI sedang tidak tersedia karena masalah konfigurasi.";
-  }
-
-  const ai = new GoogleGenAI({ apiKey });
+  // Inisialisasi SDK Gemini secara langsung menggunakan process.env.API_KEY
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
