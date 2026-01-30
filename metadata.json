@@ -1,0 +1,8 @@
+{
+  "name": "Nexus TMA - AI Assistant",
+  "description": "A feature-rich Telegram Mini App powered by Gemini AI, featuring smart chat, task management, and a sleek mobile-first design.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
