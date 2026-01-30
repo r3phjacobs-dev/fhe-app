@@ -6,30 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Forex Home Expert</title>
     
-    <!-- Monetag SDK - In-App Interstitial -->
+    <!-- Mencegah error process -->
+    <script>window.process = { env: { API_KEY: "" } };</script>
+
+    <!-- Monetag SDK -->
     <script src='//libtl.com/sdk.js' data-zone='10524338' data-sdk='show_10524338'></script>
     
+    <!-- Polyfill untuk Import Maps (Sangat Penting untuk Telegram Android/iOS lama) -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.1/dist/es-module-shims.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <script>
-      // Debugger: Menangkap error sebelum React dimuat
-      window.onerror = function(msg, url, lineNo, columnNo, error) {
-        var root = document.getElementById('root');
-        if (root) {
-          root.innerHTML = '<div style="padding:20px; color:red; font-family:sans-serif;">' +
-            '<h3>Terjadi Kesalahan Pemuatan:</h3>' +
-            '<p>' + msg + '</p>' +
-            '<small>Baris: ' + lineNo + '</small>' +
-            '<br><button onclick="location.reload()" style="margin-top:10px; padding:8px 16px; background:#1b5e20; color:white; border:none; border-radius:8px;">Muat Ulang</button>' +
-            '</div>';
-        }
-        return false;
-      };
-
-      // Shim process.env
-      window.process = { env: { API_KEY: "" } };
-    </script>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.2.4",
+    "react-dom": "https://esm.sh/react-dom@19.2.4",
+    "react-dom/client": "https://esm.sh/react-dom@19.2.4/client",
+    "@google/genai": "https://esm.sh/@google/genai@1.38.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
     
     <style>
         :root {
@@ -45,10 +45,9 @@
             height: 100vh;
             height: 100dvh;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        #root {
-            height: 100%;
-        }
+        #root { height: 100%; }
         #root:empty::before {
             content: "Memuat Nexus TMA...";
             display: flex;
@@ -57,23 +56,29 @@
             height: 100%;
             font-weight: bold;
             color: #1b5e20;
+            font-size: 14px;
+        }
+        .error-screen {
+            padding: 20px;
+            color: #721c24;
+            background: #f8d7da;
+            border-radius: 12px;
+            margin: 20px;
+            font-family: sans-serif;
         }
     </style>
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.2.4",
-    "react-dom": "https://esm.sh/react-dom@19.2.4",
-    "react-dom/client": "https://esm.sh/react-dom@19.2.4/client",
-    "@google/genai": "https://esm.sh/@google/genai@1.38.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
-  }
-}
-</script>
-    <script type="module" src="./index.tsx"></script>
 </head>
-<body class="bg-gray-50">
+<body>
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+    <script>
+      // Tangkap error fatal agar tidak layar putih saja
+      window.onerror = function(m, u, l) {
+        var r = document.getElementById('root');
+        if(r && !r.innerHTML.includes('button')) {
+          r.innerHTML = '<div class="error-screen"><h3>Gagal Memuat</h3><p>'+m+'</p><button onclick="location.reload()" style="background:#1b5e20;color:white;border:none;padding:10px;border-radius:8px;width:100%">Coba Lagi</button></div>';
+        }
+      };
+    </script>
 </body>
 </html>
