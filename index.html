@@ -27,6 +27,15 @@
             background: rgba(27, 94, 32, 0.2);
             border-radius: 10px;
         }
+        #root:empty::before {
+            content: "Memuat Nexus TMA...";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-weight: bold;
+            color: #1b5e20;
+        }
     </style>
     <script type="importmap">
     {
@@ -38,10 +47,10 @@
       }
     }
     </script>
-<link rel="stylesheet" href="/index.css">
+    <!-- PENTING: Memanggil index.tsx secara eksplisit -->
+    <script type="module" src="./index.tsx"></script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900">
     <div id="root"></div>
-<script type="module" src="/index.tsx"></script>
 </body>
 </html>
