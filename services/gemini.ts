@@ -1,12 +1,17 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-// Core function to interact with Gemini API
 export const chatWithGemini = async (prompt: string, history: { role: 'user' | 'model', parts: { text: string }[] }[]) => {
-  // Always use this specific initialization format with named apiKey parameter
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // Pastikan API KEY tersedia sebelum inisialisasi
+  const apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) ? process.env.API_KEY : '';
   
-  // Use gemini-3-flash-preview as the default model for general chat tasks
+  if (!apiKey) {
+    console.error("API Key Gemini tidak ditemukan.");
+    return "Maaf, asisten AI sedang tidak tersedia karena masalah konfigurasi.";
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
+  
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: [
@@ -19,6 +24,5 @@ export const chatWithGemini = async (prompt: string, history: { role: 'user' | '
     }
   });
 
-  // Extract text output using the .text property as per guidelines
   return response.text;
 };
