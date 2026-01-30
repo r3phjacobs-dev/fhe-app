@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import { Tab } from './types';
-import Layout from './components/Layout';
-import Home from './components/Home';
-import AIChat from './components/AIChat';
-import Tasks from './components/Tasks';
-import Settings from './components/Settings';
-import { safeStorage } from './services/storage';
+import { Tab } from './types.ts';
+import Layout from './components/Layout.tsx';
+import Home from './components/Home.tsx';
+import AIChat from './components/AIChat.tsx';
+import Tasks from './components/Tasks.tsx';
+import Settings from './components/Settings.tsx';
+import { safeStorage } from './services/storage.ts';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('home');
@@ -18,19 +18,16 @@ const App: React.FC = () => {
       tg.ready();
       tg.expand();
       
-      // Periksa versi sebelum memanggil fungsi yang mungkin tidak tersedia di v6.0
       if (tg.isVersionAtLeast('6.1')) {
         tg.setHeaderColor('#1b5e20');
         tg.setBackgroundColor('#f4f7f6');
       }
     }
 
-    // Muat poin dari storage secara aman
     safeStorage.getItem('user_points').then(val => {
       if (val) setUserPoints(parseInt(val, 10));
     });
 
-    // Inisialisasi Iklan Interstitial Monetag
     if (typeof window.show_10524338 === 'function') {
       window.show_10524338({
         type: 'inApp',
@@ -45,7 +42,6 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // Simpan poin setiap kali berubah
   useEffect(() => {
     safeStorage.setItem('user_points', userPoints.toString());
   }, [userPoints]);
